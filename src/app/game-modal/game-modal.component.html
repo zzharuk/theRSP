@@ -1,0 +1,56 @@
+<div class="d-flex flex-column">
+  <h4 *ngIf="!Game.userScores.total" class="text-center">{{ wellcomeMsg +" "+ UserName}}</h4>
+  <button 
+    class="mx-auto" 
+    mdbBtn 
+    type="button" 
+    color="default" 
+    outline="true" 
+    mdbWavesEffect 
+    (click)="Game.start()"
+    [disabled]="Game.status"
+  >{{Game.status ? Timer.time : buttonStartTitle}}</button>
+  
+</div>
+<hr>
+<div class="row">
+  <div class="col-8">
+      <h5>Scores</h5>
+      <ul class="list-group list-group-horizontal-md">
+        <li class="list-group-item">Wins: {{Game.userScores.win}}</li>
+        <li class="list-group-item">Ties: {{Game.userScores.tie}}</li>
+        <li class="list-group-item">Loses: {{Game.userScores.lose}}</li>
+      </ul>
+  </div>
+  <div class="col-4">
+    <p class="h3 text-center my-4">{{ ResultMessage }}</p>
+  </div>
+  
+</div>
+<hr>
+<div class="row">
+  <div class="col user-side">
+    <h4>{{userSideTitle + UserName}}</h4>
+    <div class="d-flex flex-row">
+      <button 
+        *ngFor="let item of allTheItems" 
+        mdbBtn 
+        color="{{item.index == Game.buttonSelected ? 'default': ''}}"
+        size="lg" 
+        class="waves-light" 
+        mdbWavesEffect 
+        (click)="Game.stop(item.index); Game.buttonSelected = item.index;"
+        [disabled]="! Game.status"
+        [ngClass]="item.index == Game.buttonSelected ? 'active-button':  ''"
+        >
+        <mdb-icon fas icon="{{item.icon}}"></mdb-icon>
+      </button>
+    </div>
+  </div>
+  <div class="col border-left ai-side">
+    <h4>{{aiSideTitle}}</h4>
+    <button size="lg" mdbBtn disabled>
+      <mdb-icon fas icon="{{Game.aiIcon}}"></mdb-icon>
+    </button>
+  </div>
+</div>
